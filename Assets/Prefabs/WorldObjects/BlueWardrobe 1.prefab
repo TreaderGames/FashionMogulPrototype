@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 8deaf91f978336e4986863f579026c3c, type: 2}
     - target: {fileID: 2561111418549967380, guid: dc9ed82f2cbbc2b4e808203d65b0a0e0, type: 3}
       propertyPath: m_Name
-      value: BlueWardrobe 1
+      value: BlueWardrobe
       objectReference: {fileID: 0}
     - target: {fileID: 2561111418549967383, guid: dc9ed82f2cbbc2b4e808203d65b0a0e0, type: 3}
       propertyPath: m_RootOrder
@@ -21,15 +21,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2561111418549967383, guid: dc9ed82f2cbbc2b4e808203d65b0a0e0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -3.3500001
       objectReference: {fileID: 0}
     - target: {fileID: 2561111418549967383, guid: dc9ed82f2cbbc2b4e808203d65b0a0e0, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2561111418549967383, guid: dc9ed82f2cbbc2b4e808203d65b0a0e0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 9.41
       objectReference: {fileID: 0}
     - target: {fileID: 2561111418549967383, guid: dc9ed82f2cbbc2b4e808203d65b0a0e0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -61,7 +61,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8305257404524385253, guid: dc9ed82f2cbbc2b4e808203d65b0a0e0, type: 3}
       propertyPath: wardrobeType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dc9ed82f2cbbc2b4e808203d65b0a0e0, type: 3}

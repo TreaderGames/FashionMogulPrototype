@@ -31,14 +31,14 @@ public class PlayerMovement : MonoBehaviour
             UpdatePlayerLook();
         }
 
-        //if(Input.GetMouseButtonDown(0))
-        //{
-        //    playerAnimator.SetBool(WALK_ANIMATION_KEY, true);
-        //}
-        //else if (Input.GetMouseButtonUp(0))
-        //{
-        //    playerAnimator.SetBool(WALK_ANIMATION_KEY, false);
-        //}
+        if(Input.GetMouseButtonDown(0))
+        {
+            playerAnimator.SetBool(WALK_ANIMATION_KEY, true);
+        }
+        else if (Input.GetMouseButtonUp(0))
+        {
+            playerAnimator.SetBool(WALK_ANIMATION_KEY, false);
+        }
     }
     #endregion
 
