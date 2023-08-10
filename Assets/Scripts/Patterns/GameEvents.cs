@@ -1,4 +1,5 @@
 public enum EventID
 {
     EVENT_GAME_START,
+    EVENT_PLAYER_DATA_UPDATE
 }

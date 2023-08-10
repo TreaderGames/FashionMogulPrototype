@@ -1,31 +1,37 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class PlayerDataController : Singleton<PlayerDataController>
 {
-    private int currentOutfitStackCount = 0;
-    private WardrobeData.WardrobeType currentWardrobeType;
+    public struct PlayerData
+    {
+        public int currentOutfitStackCount;
+        public WardrobeData.WardrobeType currentWardrobeType;
+    }
+
+    PlayerData playerData;
 
     #region Public
     public void AddToWardrobe(WardrobeData.WardrobeType wardrobeType)
     {
-        if(currentWardrobeType != wardrobeType)
+        if(playerData.currentWardrobeType != wardrobeType)
         {
-            currentOutfitStackCount = 1;
-            currentWardrobeType = wardrobeType;
+            playerData.currentOutfitStackCount = 1;
+            playerData.currentWardrobeType = wardrobeType;
         }
         else
         {
-            currentOutfitStackCount++;
+            playerData.currentOutfitStackCount++;
         }
+
+        EventController.TriggerEvent(EventID.EVENT_PLAYER_DATA_UPDATE, playerData);
     }
 
     public bool RemoveFromWardrobe(WardrobeData.WardrobeType wardrobeType)
     {
-        if (currentWardrobeType == wardrobeType && currentOutfitStackCount > 0)
+        if (playerData.currentWardrobeType == wardrobeType && playerData.currentOutfitStackCount > 0)
         {
-            currentOutfitStackCount--;
+            playerData.currentOutfitStackCount--;
+            EventController.TriggerEvent(EventID.EVENT_PLAYER_DATA_UPDATE, playerData);
+
             return true;
         }
 
