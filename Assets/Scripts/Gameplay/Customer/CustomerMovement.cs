@@ -5,6 +5,7 @@ using UnityEngine;
 public class CustomerMovement : MonoBehaviour
 {
     [SerializeField] Customer customer;
+    [SerializeField] CustomerCollider customerCollider;
     [SerializeField] float speed = 4;
     [SerializeField] float distThreshold = 0.1f;
 
@@ -17,11 +18,13 @@ public class CustomerMovement : MonoBehaviour
     private void OnEnable()
     {
         customer.AddListener(HandleCustomerStateChanged);
+        customerCollider.AddListener(HandleCustomerCollisionWithPlayer);
     }
 
     private void OnDisable()
     {
         customer?.RemoveListener(HandleCustomerStateChanged);
+        customerCollider?.RemoveListener(HandleCustomerCollisionWithPlayer);
     }
 
     // Update is called once per frame
@@ -38,8 +41,18 @@ public class CustomerMovement : MonoBehaviour
     private void StartMovingTowardMirrior()
     {
         target = customer.pCustomerData.endPos.position;
+        StartMoving();
+    }
+    private void StartMovingTowardStart()
+    {
+        target = customer.pCustomerData.startPos.position;
+        StartMoving();
+    }
+
+    private void StartMoving()
+    {
         moveDirection = Vector3.Normalize(target - transform.position);
-        transform.LookAt(moveDirection);
+        transform.LookAt(target);
         canMove = true;
     }
 
@@ -53,6 +66,10 @@ public class CustomerMovement : MonoBehaviour
             {
                 customer.ChangeState(CustomerState.Waiting);
             }
+            else if (customer.pCustomerData.customerState == CustomerState.MovingOut)
+            {
+                customer.ChangeState(CustomerState.None);
+            }
         }
     }
     #endregion
@@ -65,10 +82,23 @@ public class CustomerMovement : MonoBehaviour
             case CustomerState.MovingToMirror:
                 StartMovingTowardMirrior();
                 break;
+            case CustomerState.MovingOut:
+                StartMovingTowardStart();
+                break;
             case CustomerState.None:
             case CustomerState.Waiting:
                 canMove = false;
                 break;
+        }
+    }
+
+    private void HandleCustomerCollisionWithPlayer()
+    {
+        bool removed = PlayerDataController.Instance.RemoveFromWardrobe(customer.pCustomerData.wardrobeRequest);
+
+        if(removed)
+        {
+            customer.ChangeState(CustomerState.MovingOut);
         }
     }
     #endregion

@@ -25,6 +25,7 @@ public class Customer : MonoBehaviour
         switch(customerState)
         {
             case CustomerState.MovingToMirror:
+            case CustomerState.MovingOut:
                 animator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, true);
                 break;
             case CustomerState.None:
