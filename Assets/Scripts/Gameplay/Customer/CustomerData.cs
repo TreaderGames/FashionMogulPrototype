@@ -6,6 +6,7 @@ public enum CustomerState
     None,
     MovingToMirror,
     MovingOut,
+    Waiting,
 }
 
 [Serializable]

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
-    const string WALK_ANIMATION_KEY = "Walk";
-
     [SerializeField] Transform playerTransform;
     [SerializeField] Transform testCube;
     [SerializeField] Animator playerAnimator;
@@ -33,11 +31,11 @@ public class PlayerMovement : MonoBehaviour
 
         if(Input.GetMouseButtonDown(0))
         {
-            playerAnimator.SetBool(WALK_ANIMATION_KEY, true);
+            playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, true);
         }
         else if (Input.GetMouseButtonUp(0))
         {
-            playerAnimator.SetBool(WALK_ANIMATION_KEY, false);
+            playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, false);
         }
     }
     #endregion
@@ -61,11 +59,11 @@ public class PlayerMovement : MonoBehaviour
             if (Vector3.SqrMagnitude(transform.position - lookDir) > pointDistanceThreshold)
             {
                 MovePlayer();
-                playerAnimator.SetBool(WALK_ANIMATION_KEY, true);
+                playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, true);
             }
             else
             {
-                playerAnimator.SetBool(WALK_ANIMATION_KEY, false);
+                playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, false);
             }
         }
     }
