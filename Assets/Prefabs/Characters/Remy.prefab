@@ -1459,7 +1459,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerCollision: {fileID: 402073983182417968}
-  delayToAddSeconds: 4
+  delayToAddSeconds: 2
 --- !u!1 &5066491694796313790
 GameObject:
   m_ObjectHideFlags: 0

@@ -15,6 +15,14 @@ public class CustomerController : MonoBehaviour
         activeCustomers = new Customer[customerDatas.Length];
         SpawnCustomers();
     }
+
+    private void OnDisable()
+    {
+        for (int i = 0; i < activeCustomers.Length; i++)
+        {
+            activeCustomers[i]?.RemoveListener(HandleCustomerStateChanged);
+        }
+    }
     #endregion
 
     #region Private
@@ -28,6 +36,8 @@ public class CustomerController : MonoBehaviour
             customerDatas[i].wardrobeRequest = wardrobeType;
             customer.InitCustomer(customerDatas[i]);
             activeCustomers[i] = customer;
+
+            customer.AddListener(HandleCustomerStateChanged);
         }
     }
 
@@ -39,6 +49,24 @@ public class CustomerController : MonoBehaviour
         randomNum = UnityEngine.Random.Range(1, enumCount);
 
         return (WardrobeData.WardrobeType)randomNum;
+    }
+
+    private void SendCustomerBack(Customer customer)
+    {
+        customer.pCustomerData.wardrobeRequest = GetRandomWardrobeType();
+        customer.ChangeState(CustomerState.MovingToMirror);
+    }
+    #endregion
+
+    #region Callback
+    private void HandleCustomerStateChanged(CustomerState customerState, Customer customer)
+    {
+        switch (customerState)
+        {
+            case CustomerState.None:
+                SendCustomerBack(customer);
+                break;
+        }
     }
     #endregion
 }

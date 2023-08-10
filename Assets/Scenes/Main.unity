@@ -705,6 +705,10 @@ PrefabInstance:
       propertyPath: testCube
       value: 
       objectReference: {fileID: 622487895}
+    - target: {fileID: 2895572309809920410, guid: 8f2dd7752ba0a3c43bbccf7e9e9821fb, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 4116611473218851812, guid: 8f2dd7752ba0a3c43bbccf7e9e9821fb, type: 3}
       propertyPath: m_Name
       value: PlayerContainer

@@ -6,7 +6,7 @@ public class Customer : MonoBehaviour
     [SerializeField] Animator animator;
 
     CustomerData customerData;
-    Action<CustomerState> customerStateChange;
+    Action<CustomerState, Customer> customerStateChange;
 
     public CustomerData pCustomerData { get => customerData; }
 
@@ -34,14 +34,14 @@ public class Customer : MonoBehaviour
                 break;
         }
 
-        customerStateChange?.Invoke(customerState);
+        customerStateChange?.Invoke(customerState, this);
     }
 
-    public void AddListener(Action<CustomerState> action)
+    public void AddListener(Action<CustomerState, Customer> action)
     {
         customerStateChange += action;
     }
-    public void RemoveListener(Action<CustomerState> action)
+    public void RemoveListener(Action<CustomerState, Customer> action)
     {
         customerStateChange -= action;
     }

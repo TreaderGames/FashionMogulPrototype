@@ -23,7 +23,7 @@ public class PlayerDataController : Singleton<PlayerDataController>
 
     public bool RemoveFromWardrobe(WardrobeData.WardrobeType wardrobeType)
     {
-        if (currentWardrobeType == wardrobeType)
+        if (currentWardrobeType == wardrobeType && currentOutfitStackCount > 0)
         {
             currentOutfitStackCount--;
             return true;

@@ -75,7 +75,7 @@ public class CustomerMovement : MonoBehaviour
     #endregion
 
     #region Callback
-    private void HandleCustomerStateChanged(CustomerState customerState)
+    private void HandleCustomerStateChanged(CustomerState customerState, Customer customer)
     {
         switch(customerState)
         {
