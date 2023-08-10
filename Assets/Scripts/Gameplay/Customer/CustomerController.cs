@@ -9,11 +9,9 @@ public class CustomerController : MonoBehaviour
     Customer[] activeCustomers;
 
     #region Unity
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        activeCustomers = new Customer[customerDatas.Length];
-        SpawnCustomers();
+        EventController.StartListening(EventID.EVENT_GAME_START, HandleGameStarted);
     }
 
     private void OnDisable()
@@ -22,6 +20,8 @@ public class CustomerController : MonoBehaviour
         {
             activeCustomers[i]?.RemoveListener(HandleCustomerStateChanged);
         }
+
+        EventController.StopListening(EventID.EVENT_GAME_START, HandleGameStarted);
     }
     #endregion
 
@@ -68,5 +68,12 @@ public class CustomerController : MonoBehaviour
                 break;
         }
     }
+
+    private void HandleGameStarted(object arg)
+    {
+        activeCustomers = new Customer[customerDatas.Length];
+        SpawnCustomers();
+    }
+
     #endregion
 }

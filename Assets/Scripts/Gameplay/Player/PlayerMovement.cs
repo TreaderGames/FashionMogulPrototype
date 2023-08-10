@@ -12,6 +12,7 @@ public class PlayerMovement : MonoBehaviour
 
     Camera mainCamera;
     Plane intersectPlane;
+    bool gameStarted;
 
     #region Unity
     // Start is called before the first frame update
@@ -19,11 +20,17 @@ public class PlayerMovement : MonoBehaviour
     {
         mainCamera = Camera.main;
         intersectPlane = new Plane(Vector3.up, transform.position.y);
+        gameStarted = false;
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(!gameStarted)
+        {
+            return;
+        }
+
         if(Input.GetMouseButton(0))
         {
             UpdatePlayerLook();
@@ -38,6 +45,17 @@ public class PlayerMovement : MonoBehaviour
             playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, false);
         }
     }
+
+    private void OnEnable()
+    {
+        EventController.StartListening(EventID.EVENT_GAME_START, HandleGameStarted);
+    }
+
+    private void OnDisable()
+    {
+        EventController.StopListening(EventID.EVENT_GAME_START, HandleGameStarted);
+    }
+
     #endregion
 
     #region Private
@@ -72,5 +90,14 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position += (playerMoveSpeed * Time.deltaTime) * playerTransform.forward;
     }
+    #endregion
+
+    #region Callbacks
+
+    private void HandleGameStarted(object arg)
+    {
+        gameStarted = true;
+    }    
+
     #endregion
 }
