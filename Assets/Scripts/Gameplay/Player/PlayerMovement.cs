@@ -13,6 +13,12 @@ public class PlayerMovement : MonoBehaviour
     Camera mainCamera;
     Plane intersectPlane;
     bool gameStarted;
+    bool canMove;
+
+    Touch touchInput;
+    Vector3 swipeDirection;
+    Vector2 startPos;
+    Vector2 swipeScreenDir;
 
     #region Unity
     // Start is called before the first frame update
@@ -26,22 +32,46 @@ public class PlayerMovement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!gameStarted)
+        if (!gameStarted)
         {
             return;
         }
 
-        if(Input.GetMouseButton(0))
+        //if(Input.GetMouseButton(0))
+        //{
+        //    UpdatePlayerLook();
+        //}
+
+        //if(Input.GetMouseButtonDown(0))
+        //{
+        //    playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, true);
+        //}
+        //else if (Input.GetMouseButtonUp(0))
+        //{
+        //    playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, false);
+        //}
+
+        if (Input.touchCount > 0)
         {
+            touchInput = Input.GetTouch(0);
+            if (touchInput.phase == TouchPhase.Moved)
+            {
+                playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, true);
+                swipeScreenDir = touchInput.position - startPos;
+                swipeDirection.x = swipeScreenDir.x;
+                swipeDirection.z = swipeScreenDir.y;
+                canMove = true;
+            }
+            else if (touchInput.phase == TouchPhase.Began)
+            {
+                startPos = touchInput.position;
+            }
+
             UpdatePlayerLook();
         }
-
-        if(Input.GetMouseButtonDown(0))
+        else
         {
-            playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, true);
-        }
-        else if (Input.GetMouseButtonUp(0))
-        {
+            canMove = false;
             playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, false);
         }
     }
@@ -61,28 +91,33 @@ public class PlayerMovement : MonoBehaviour
     #region Private
     private void UpdatePlayerLook()
     {
-        Vector3 lookDir;
-        Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+        //Vector3 lookDir;
+        //Ray ray = mainCamera.ScreenPointToRay(Input.mousePosition);
 
-        //Initialise the enter variable
-        float enter = 0.0f;
+        ////Initialise the enter variable
+        //float enter = 0.0f;
 
-        if (intersectPlane.Raycast(ray, out enter))
+        //if (intersectPlane.Raycast(ray, out enter))
+        //{
+        //    lookDir = ray.GetPoint(enter);
+        //    lookDir.y = playerTransform.position.y;
+        //    //testCube.transform.position = lookDir;
+        //    transform.LookAt(lookDir);
+
+        //    if (Vector3.SqrMagnitude(transform.position - lookDir) > pointDistanceThreshold)
+        //    {
+        //        MovePlayer();
+        //        playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, true);
+        //    }
+        //    else
+        //    {
+        //        playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, false);
+        //    }
+        //}
+        if (canMove)
         {
-            lookDir = ray.GetPoint(enter);
-            lookDir.y = playerTransform.position.y;
-            //testCube.transform.position = lookDir;
-            transform.LookAt(lookDir);
-
-            if (Vector3.SqrMagnitude(transform.position - lookDir) > pointDistanceThreshold)
-            {
-                MovePlayer();
-                playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, true);
-            }
-            else
-            {
-                playerAnimator.SetBool(AnimationKeys.WALK_ANIMATION_KEY, false);
-            }
+            transform.LookAt(swipeDirection);
+            MovePlayer();
         }
     }
 
